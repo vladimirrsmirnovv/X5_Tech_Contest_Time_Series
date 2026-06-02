@@ -47,51 +47,71 @@ $$
 ##### Bootstrap and variance reduction
 
 - Consider dataset $X$ containing $m$ objects.
+
 - Pick $m$ objects with replacement from $X$ and repeat this procedure $N$ times to get $N$ bootstrap datasets:
+
 $$
 X_1, X_2, \ldots, X_N.
 $$
+
 - Error of the model trained on $X_j$:
+
 $$
 \varepsilon_j(x) = b_j(x) - y(x), \quad j = 1, \ldots, N.
 $$
+
 Then:
+
 $$
 \mathbb{E}_x [b_j(x) - y(x)]^2 = \mathbb{E}_x \varepsilon_j^2(x).
 $$
+
 - The mean error of $N$ separate models:
+
 $$
 E_1 = \frac{1}{N} \sum_{j=1}^{N} \mathbb{E}_x \varepsilon_j^2(x).
 $$
+
 Assume for simplicity that all base models have the same error variance:
+
 $$
 \mathbb{E}_x[\varepsilon_j^2(x)] = \sigma^2.
 $$
+
 Then:
+
 $$
 E_1 = \sigma^2.
 $$
+
 ##### Naive assumption
 
 If we assume that the errors are unbiased and uncorrelated:
+
 $$
 \mathbb{E}_x[\varepsilon_j(x)] = 0,
 $$
+
 $$
 \mathbb{E}_x[\varepsilon_i(x)\varepsilon_j(x)] = 0, \quad i \ne j,
 $$
+
 then the ensemble error decreases by $N$ times.
 
 But this assumption is usually too strong.
+
 ##### More realistic assumption: correlated errors
 
 In practice, errors of base models are not fully independent.
 
 Let the average pairwise correlation between errors be:
+
 $$
 \operatorname{corr}(\varepsilon_i, \varepsilon_j) = \rho, \quad i \ne j.
 $$
+
 Since:
+
 $$
 \operatorname{corr}(\varepsilon_i, \varepsilon_j)
 =
@@ -101,19 +121,25 @@ $$
 \sigma^2
 },
 $$
+
 we get:
+
 $$
 \mathbb{E}_x[\varepsilon_i(x)\varepsilon_j(x)] = \rho \sigma^2, \quad i \ne j.
 $$
 
 This is exactly the place where the correlation coefficient appears.
+
 ##### Averaged model
 
 The final model averages all predictions:
+
 $$
 a(x) = \frac{1}{N} \sum_{j=1}^{N} b_j(x).
 $$
+
 Its error is:
+
 $$
 E_N =
 \mathbb{E}_x
@@ -121,11 +147,15 @@ E_N =
 \frac{1}{N} \sum_{j=1}^{N} b_j(x) - y(x)
 \right)^2.
 $$
+
 Since:
+
 $$
 b_j(x) - y(x) = \varepsilon_j(x),
 $$
+
 we have:
+
 $$
 E_N =
 \mathbb{E}_x
@@ -133,7 +163,9 @@ E_N =
 \frac{1}{N} \sum_{j=1}^{N} \varepsilon_j(x)
 \right)^2.
 $$
+
 Expanding the square:
+
 $$
 E_N =
 \frac{1}{N^2}
@@ -144,15 +176,21 @@ E_N =
 \sum_{i \ne j} \varepsilon_i(x)\varepsilon_j(x)
 \right).
 $$
+
 Now substitute:
+
 $$
 \mathbb{E}_x[\varepsilon_j^2(x)] = \sigma^2,
 $$
+
 and
+
 $$
 \mathbb{E}_x[\varepsilon_i(x)\varepsilon_j(x)] = \rho \sigma^2, \quad i \ne j.
 $$
+
 Then:
+
 $$
 E_N =
 \frac{1}{N^2}
@@ -162,7 +200,9 @@ N\sigma^2
 N(N-1)\rho\sigma^2
 \right).
 $$
+
 Simplify:
+
 $$
 E_N =
 \sigma^2
@@ -172,7 +212,9 @@ E_N =
 \frac{N-1}{N}\rho
 \right).
 $$
+
 Equivalently:
+
 $$
 E_N =
 \sigma^2
@@ -180,11 +222,15 @@ E_N =
 \rho + \frac{1-\rho}{N}
 \right).
 $$
+
 Since:
+
 $$
 E_1 = \sigma^2,
 $$
+
 we get:
+
 $$
 E_N =
 E_1
@@ -192,21 +238,27 @@ E_1
 \rho + \frac{1-\rho}{N}
 \right).
 $$
+
 ##### Interpretation
 
 If $\rho = 0$, then base model errors are uncorrelated:
+
 $$
 E_N = \frac{E_1}{N}.
 $$
+
 This is the ideal case.
 
 If $\rho = 1$, then all errors are perfectly correlated:
+
 $$
 E_N = E_1.
 $$
+
 In this case, averaging gives no improvement.
 
 If $0 < \rho < 1$, then the ensemble still reduces error, but not by $N$ times:
+
 $$
 E_N =
 E_1
@@ -214,4 +266,5 @@ E_1
 \rho + \frac{1-\rho}{N}
 \right).
 $$
+
 Therefore, the smaller the correlation $\rho$ between base models, the stronger the variance reduction.
