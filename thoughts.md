@@ -113,13 +113,7 @@ $$
 Since:
 
 $$
-\mathrm{corr}(\varepsilon_i, \varepsilon_j)
-=
-\frac{
-\mathbb{E}_x[\varepsilon_i(x)\varepsilon_j(x)]
-}{
-\sigma^2
-},
+\mathrm{corr}(\varepsilon_i,\varepsilon_j)=\frac{\mathbb{E}_x[\varepsilon_i(x)\varepsilon_j(x)]}{\sigma^2}
 $$
 
 we get:
